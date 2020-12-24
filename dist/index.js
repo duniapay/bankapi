@@ -9,5 +9,6 @@ const Logger_1 = __importDefault(require("@shared/Logger"));
 // Start the server
 const port = Number(process.env.PORT || 3000);
 _server_1.default.listen(port, () => {
+    console.log('Express server started on port: ' + port);
     Logger_1.default.info('Express server started on port: ' + port);
 });
