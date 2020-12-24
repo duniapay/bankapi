@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+*.pem
+!mock-cert.pem
+.env
+package-lock.json
+coverage
+lib
+.eslintcache
+.DS_Store
+dist/pre-start/env/production.env
+src/pre-start/env/production.env

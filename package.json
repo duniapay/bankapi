@@ -1,0 +1,148 @@
+{
+  "name": "cloud-run-typescript-template",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Template for typescript projects on Google Cloud Run",
+  "author": "Sentry.io",
+  "license": "BSL",
+  "repository": "https://github.com/getsentry/cloud-run-typescript-template.git",
+  "homepage": "https://github.com/getsentry/cloud-run-typescript-template",
+  "bugs": "https://github.com/getsentry/cloud-run-typescript-template/issues",
+  "_moduleAliases": {
+    "@daos": "dist/daos",
+    "@entities": "dist/entities",
+    "@shared": "dist/shared",
+    "@server": "dist/Server"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts, html",
+    "ignore": [
+      "src/public"
+    ],
+    "exec": "ts-node -r tsconfig-paths/register ./src"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "rules": {
+      "max-len": [
+        "error",
+        {
+          "code": 100
+        }
+      ],
+      "no-console": 1,
+      "no-extra-boolean-cast": 0,
+      "@typescript-eslint/restrict-plus-operands": 0,
+      "@typescript-eslint/explicit-module-boundary-types": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-floating-promises": 0,
+      "@typescript-eslint/no-unsafe-member-access": 0,
+      "@typescript-eslint/no-unsafe-assignment": 0
+    }
+  },
+  "eslintIgnore": [
+    "src/public/",
+    "build.ts"
+  ],
+  "keywords": [
+    "sentry",
+    "cloud run",
+    "typescript",
+    "google cloud run",
+    "google cloud provider"
+  ],
+  "scripts": {
+    "deploy": "yarn build && (yarn deploy:app)",
+    "deploy:app": "./bin/deploy.sh",
+    "build": "ts-node build.ts",
+    "start": "node -r module-alias/register ./dist --env=production",
+    "prettier-format": "run-script-os",
+    "prettier-format:win32": "prettier --config .prettierrc \"./src/**/*.ts\" --write",
+    "prettier-format:darwin:linux": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "prettier-format:default": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "prettier-watch": "run-script-os",
+    "prettier-watch:win32": "onchange \"src/**/*.ts\" -- prettier --write {{changed}}",
+    "prettier-watch:darwin:linux": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
+    "prettier-watch:default": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
+    "start:dev": "nodemon",
+    "test": "nodemon --config ./spec/nodemon.json",
+    "test:watch": "NODE_ENV=development yarn jest --watch --notify --notifyMode=change --coverage"
+  },
+  "dependencies": {
+    "@sentry/integrations": "^5.15.5",
+    "@sentry/node": "^5.12.3",
+    "@types/node": "12",
+    "command-line-args": "^5.1.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^4.2.0",
+    "http-status-codes": "^2.1.4",
+    "jet-logger": "^1.0.4",
+    "jsonfile": "^6.1.0",
+    "module-alias": "^2.2.2",
+    "morgan": "^1.10.0",
+    "typescript": "^3.9.2"
+  },
+  "devDependencies": {
+    "@types/command-line-args": "^5.0.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.9",
+    "@types/find": "^0.2.1",
+    "@types/fs-extra": "^9.0.5",
+    "@types/jasmine": "^3.6.2",
+    "@types/jest": "^25.2.3",
+    "@types/jsonfile": "^6.0.0",
+    "@types/morgan": "^1.9.2",
+    "@types/node": "^14.14.14",
+    "@types/supertest": "^2.0.10",
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.11.0",
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-typescript": "^0.14.0",
+    "find": "^0.3.0",
+    "fs-extra": "^9.0.1",
+    "husky": ">=4",
+    "run-script-os": "^1.1.1",
+    "onchange": "^6.1.0",
+    "jasmine": "^3.6.3",
+    "jest": "26",
+    "jest-circus": "^26.0.1",
+    "lint-staged": ">=10",
+    "nodemon": "^2.0.6",
+    "prettier": "^1.19.1",
+    "supertest": "^6.0.1",
+    "ts-jest": "^26.0.0",
+    "ts-node": "^9.1.1",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.1.3"
+  },
+  "engines": {
+    "node": ">= 12.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test && npm run prettier-format && npm run lint"
+    }
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix"
+  }
+}
