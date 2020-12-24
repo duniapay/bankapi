@@ -9,6 +9,8 @@ const router = Router();
 const userDao = new UserDao();
 const { BAD_REQUEST, CREATED, OK } = StatusCodes;
 
+
+
 /******************************************************************************
  *                      Get All Users - "GET /api/users/all"
  ******************************************************************************/
